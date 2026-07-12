@@ -110,4 +110,4 @@ def retriever(text:list[str], chunk_size:int, overlap:int):
 if __name__ == "__main__":
   #chroma_basics()
   #similarity_score()
-  retriever(sample_texts, 300 , 10)
+  retriever(sample_texts, 250 , 20)
