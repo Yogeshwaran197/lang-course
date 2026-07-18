@@ -5,6 +5,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_classic.storage import InMemoryStore
 from langchain_classic.retrievers.document_compressors import LLMChainExtractor
+from langchain_classic.retrievers.multi_query import  MultiQueryRetriever
 from langchain.chat_models import init_chat_model
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.documents import Document
@@ -310,11 +311,43 @@ def contextual_compressor():
   for doc in compressured_docs:
     print(f"length: {len(doc.page_content)} chars")
     print(f"content: {doc.page_content}")
+
+
+def demo_multi_query_retriever():
+    """Multi-Query Retriever generates multiple query perspectives."""
+
+    print("=" * 60)
+    print("MULTI-QUERY RETRIEVER")
+    print("Generates multiple perspectives on your question")
+    print("=" * 60)
+
+    vectorstore = create_vectorstore()
+
+    multi_retriever = MultiQueryRetriever.from_llm(
+      retriever= vectorstore.as_retriever(
+        search_kwargs = {
+          "k":1
+        }
+      ),
+      llm = llm
+    )
+
+    query = "What tools can I use to build AI applications?"
+
+    docs = multi_retriever.invoke(query)
+
+    print(f"Retrieved {len(docs)} unique documents:")
+    for i, doc in enumerate(docs):
+        print(
+            f"\n{i+1}. [{doc.metadata.get('topic', 'N/A')}] {doc.page_content[:100]}..."
+        )
+
   
 if __name__ == "__main__":
   #basic_rag_demo()
   #demo_parent_document_retriever()
-  contextual_compressor()
+  #contextual_compressor()
+  demo_multi_query_retriever()
 
 
 
