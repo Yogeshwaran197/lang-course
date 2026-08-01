@@ -1,0 +1,8 @@
+Your Conversation Log:
+You: what is my name?
+AI: I don’t have any information about your name. If you’d like, you can tell me what you’d like to be called!
+
+You: my name
+AI: I’m not sure I caught your name—could you let me know what you’d like me to call you?
+
+End of Conversation
