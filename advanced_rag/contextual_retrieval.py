@@ -106,6 +106,7 @@ def run_pipeline(document, query):
 
         question:{question}
 
+        be concise and structured way.
     """
     )
 
