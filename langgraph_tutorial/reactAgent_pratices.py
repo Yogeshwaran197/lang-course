@@ -8,6 +8,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import StateGraph, START, END
 from langchain_community.tools import DuckDuckGoSearchRun, ArxivQueryRun
 from langchain_community.utilities import ArxivAPIWrapper
+from langchain_core.prompts import MessagesPlaceholder
 import requests
 
 load_dotenv()
@@ -77,7 +78,7 @@ def llm_node(state: AgentState) -> AgentState:
 
     prompt = ChatPromptTemplate.from_messages([
         ("system","You're Helpful Assistant , you use tools to answer if you did'nt know the answer"),
-        ("human","{input}"),
+        MessagesPlaceholder("input"),
     ])
 
     chain = prompt | llm_with_tools
