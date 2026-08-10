@@ -129,7 +129,7 @@ graph.add_edge("tool_node", "llm_node")
 ReactAgent = graph.compile()
 
 result = ReactAgent.invoke({'messages' : [HumanMessage(content="What is latest news about ai in 08/08/2026?")]})
-print(result)
+print(result['messages'][-1].content)
 
 
 
