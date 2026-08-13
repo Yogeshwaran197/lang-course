@@ -36,10 +36,10 @@ def generator_node(state: Agentstate) -> Agentstate:
     topic = state['topic']
 
     if state['feedback']:
-        result = llm.invoke(f"Please modify this joke {state['joke']} based on the feedback {state['feedback']}")
+        result = llm.invoke(f"Please modify this joke {state['joke']} based on the feedback {state['feedback']}, only give joke no instruction")
 
     else:
-        result = llm.invoke(f"generate the joke for following topic {topic}")
+        result = llm.invoke(f"generate the joke for following topic {topic}, keep it short and concise manner, just give joke")
 
     state['joke'] =  result.content
 
@@ -70,7 +70,7 @@ def evaluator_node(state: Agentstate) -> Agentstate:
 def should_continue(state: Agentstate) -> str:
    
     iteration = state['max_iteration']
-    if iteration <= 5:
+    if iteration < 5 and state["funny_flag"] != "not funny":
         return "continue"
     else:
         return "End"
@@ -113,7 +113,7 @@ print("=" * 60)
 print(f"\nTopic : {response['topic']}")
 print(f"\nJoke : {response['joke']}")
 print(f"\nFunny Flag : {response['funny_flag']}")
-print(f"\nFeedbak : {response['feedback']}")
+print(f"\nFeedback : {response['feedback']}")
 print(f"\nIteration : {response['max_iteration']}")
 
 
